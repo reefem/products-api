@@ -18,7 +18,7 @@ service: productsapi
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
-frameworkVersion: '2.72.2'
+frameworkVersion: '3.7.2'
 
 provider:
   name: aws
@@ -27,7 +27,7 @@ provider:
 
 # you can overwrite defaults here
 # stage: dev
-  region: eu-west-1
+#region: eu-west-1
 
   iam:
     role:
@@ -43,18 +43,35 @@ provider:
 
 functions:
   createProduct:
-    handler: handler.createProduct
+    handler: src/handler.createProduct
     events:
       - httpApi:
           path: /product
           method: post
   getProduct:
-    handler: handler.getProduct
+    handler: src/handler.getProduct
     events:
       - httpApi:
           path: /product/{id}
           method: get
-
+  updateProduct:
+    handler: src/handler.updateProduct
+    events:
+      - httpApi:
+          path: /product/{id}
+          method: put
+  deleteProduct:
+    handler: src/handler.deleteProduct
+    events:
+      - httpApi:
+          path: /product/{id}
+          method: delete
+  listProduct:
+    handler: src/handler.listProduct
+    events:
+      - httpApi:
+          path: /products
+          method: get
 plugins:
   - serverless-plugin-typescript
 # you can add CloudFormation resource templates here
